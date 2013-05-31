@@ -11,6 +11,8 @@
   <style>
   ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
   li { margin: 5px; padding: 5px; width: 150px; }
+  #sortable .ui-selecting { background: #FECA40; }
+  #sortable .ui-selected { background: #F39814; color: white; }
   
   </style>
   
@@ -19,19 +21,19 @@
    /* Auto Complete */
 
    $(function() {
-    var availableTags = [
+    var availableNewItems = [
       "Oranges","Apples","BBQ","Bread", "Coffee", "Cream", "Charcoal", "Fish", "Meat", "Soda", "Beer","Milk","Butter","Bacon","Ice Cream","Vodka","Spinach","Salsa","Pears","Chicken","Coke","Orange Juice"
     ];
-    $( "#tags" ).autocomplete({
-      source: availableTags
+    $( "#NewItems" ).autocomplete({
+      source: availableNewItems
     });
   });
 
 /* Add New Items */
 
-$('#submit').on('click',function(){
+$('#NewItems').on('click',function(){
   var newItem = $('#textfield').val();
-  newItem = '<p class = "ui-state-default">'+ newItem + '</p>'
+  newItem = '<p class = "sortable">'+ newItem + '</p>'
     $(newItem).insertAfter('#sortable');
   $('#textfield').val("");  
   }); 
@@ -58,14 +60,24 @@ $('#submit').on('click',function(){
       revert: true
 
     });
-    
-    /* Trying to connect new tags inmput into sortable ul */
-    $( "#tags" ).tags({
+    $( "#NewItems" ).NewItems({
       connectToSortable: "#sortable",
       helper: "clone",
       revert: "invalid"
     });
     $( "ul, li" ).disableSelection();
+  });
+
+  $(function() {
+    $( "#sortable" ).sortable({
+      stop: function() {
+        var result = $( "#select-result" ).empty();
+        $( ".ui-sortable", this ).each(function() {
+          var index = $( "#sortable li" ).index( this );
+          result.append( " #" + ( index + 1 ) );
+        });
+      }
+    });
   });
 
   </script>
@@ -74,8 +86,8 @@ $('#submit').on('click',function(){
 
 <body>
  <div class="ui-widget">
-  <label for="tags">New Items Go Here:</label>
-  <input id="tags" />
+  <label for="NewItems">New Items:</label>
+  <input id="NewItems" />
 </div>
 
  
