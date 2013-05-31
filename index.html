@@ -1,0 +1,92 @@
+<!doctype html>
+ 
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Shopping Cart!</title>
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css" />
+  <style>
+  ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
+  li { margin: 5px; padding: 5px; width: 150px; }
+  
+  </style>
+  
+  <script>
+
+   /* Auto Complete */
+
+   $(function() {
+    var availableTags = [
+      "Oranges","Apples","BBQ","Bread", "Coffee", "Cream", "Charcoal", "Fish", "Meat", "Soda", "Beer","Milk","Butter","Bacon","Ice Cream","Vodka","Spinach","Salsa","Pears","Chicken","Coke","Orange Juice"
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  });
+
+/* Add New Items */
+
+$('#submit').on('click',function(){
+  var newItem = $('#textfield').val();
+  newItem = '<p class = "ui-state-default">'+ newItem + '</p>'
+    $(newItem).insertAfter('#sortable');
+  $('#textfield').val("");  
+  }); 
+
+ /* Drag and Trash */
+
+
+ $(function() {
+    $( "#draggable" ).draggable
+    $( "#droppable" ).droppable({
+      drop: function( event, ui, text, html ) {
+        console.log(ui.draggable.length);
+        $('imput').val(ui.draggable.data('product'));
+        $( this).addClass( "ui-state-highlight" )
+          .find( "p" )
+            .html( "Trashed!" );
+            $(self).remove();
+      }
+    });
+  });
+
+  $(function() {
+    $( "#sortable" ).sortable({
+      revert: true
+
+    });
+    $( "#tags" ).tags({
+      connectToSortable: "#sortable",
+      helper: "clone",
+      revert: "invalid"
+    });
+    $( "ul, li" ).disableSelection();
+  });
+
+  </script>
+</head>
+
+
+<body>
+ <div class="ui-widget">
+  <label for="tags">New Items Go Here:</label>
+  <input id="tags" />
+</div>
+
+ 
+<ul id="sortable">
+  <li class="ui-state-default">Bread</li>
+  <li class="ui-state-default">Chicken</li>
+  <li class="ui-state-default">Rice</li>
+  <li class="ui-state-default">Beer</li>
+  <li class="ui-state-default">Charcoal</li>
+</ul>
+ <br>
+ <div id="droppable" class="ui-widget-header">
+  <p>Throw Away Items Here!</p>
+</div>
+</body>
+</html>
