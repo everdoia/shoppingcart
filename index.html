@@ -1,106 +1,57 @@
 <!doctype html>
- 
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <title>Shopping Cart!</title>
- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<link  rel = "stylesheet" href = "style.css">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-  <link rel="stylesheet" href="/resources/demos/style.css" />
-  <style>
-  ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
-  li { margin: 5px; padding: 5px; width: 150px; }
-  #sortable .ui-selecting { background: #FECA40; }
-  #sortable .ui-selected { background: #F39814; color: white; }
-  
-  </style>
-  
-  <script>
-
-   /* Auto Complete */
-
-   $(function() {
-    var availableNewItems = [
-      "Oranges","Apples","BBQ","Bread", "Coffee", "Cream", "Charcoal", "Fish", "Meat", "Soda", "Beer","Milk","Butter","Bacon","Ice Cream","Vodka","Spinach","Salsa","Pears","Chicken","Coke","Orange Juice"
-    ];
-    $( "#NewItems" ).autocomplete({
-      source: availableNewItems
-    });
-  });
-
-/* Add New Items */
-
-$('#NewItems').on('click',function(){
-  var newItem = $('#textfield').val();
-  newItem = '<p class = "sortable">'+ newItem + '</p>'
-    $(newItem).insertAfter('#sortable');
-  $('#textfield').val("");  
-  }); 
-
- /* Drag and Trash */
-
-
- $(function() {
-    $( "#draggable" ).draggable
-    $( "#droppable" ).droppable({
-      drop: function( event, ui, text, html ) {
-        console.log(ui.draggable.length);
-        $('imput').val(ui.draggable.data('product'));
-        $( this).addClass( "ui-state-highlight" )
-          .find( "p" )
-            .html( "Trashed!" );
-            $(self).remove();
-      }
-    });
-  });
-
-  $(function() {
-    $( "#sortable" ).sortable({
-      revert: true
-
-    });
-    $( "#NewItems" ).NewItems({
-      connectToSortable: "#sortable",
-      helper: "clone",
-      revert: "invalid"
-    });
-    $( "ul, li" ).disableSelection();
-  });
-
-  $(function() {
-    $( "#sortable" ).sortable({
-      stop: function() {
-        var result = $( "#select-result" ).empty();
-        $( ".ui-sortable", this ).each(function() {
-          var index = $( "#sortable li" ).index( this );
-          result.append( " #" + ( index + 1 ) );
-        });
-      }
-    });
-  });
-
-  </script>
+<script type="text/javascript" src="javascript.js"></script>
 </head>
 
 
+
 <body>
- <div class="ui-widget">
-  <label for="NewItems">New Items:</label>
-  <input id="NewItems" />
+
+<!-- BEGIN TOPBAR -->   
+    <nav id="primary">
+     <p style="font-size =10px; font-family: Tahoma; color: #fff; text-align: center" > Shopping Cart! - Directions: Add your Groceries to the list by hitting "Add Item", Click Item to Delete</p> 
+    </nav>
+<!-- END TOPBAR -->   
+
+<!-- BEGIN LIST SECTION -->
+<div id = "canvas">
+
+
+  <form name = "shopping">
+  <input type = "text" name = "NewItem" id = "textfield">
+  <input type = "button" name = "AddItem" id = "submit" value = "New Item">
+  </form>
+  <div id = "ShoppingList">
+    <div id = "ShopStart"></div>
 </div>
 
- 
-<ul id="sortable">
-  <li class="ui-state-default">Bread</li>
-  <li class="ui-state-default">Chicken</li>
-  <li class="ui-state-default">Rice</li>
-  <li class="ui-state-default">Beer</li>
-  <li class="ui-state-default">Charcoal</li>
-</ul>
- <br>
- <div id="droppable" class="ui-widget-header">
-  <p>Throw Away Items Here!</p>
+<!-- END LIST SECTION -->
+
+<!-- BEGIN FOOTER --> 
+  <footer id="primary-foot">
+    
+    
+    <section id="info">
+      <nav id="footer-nav">
+       
+      </nav>
+      
+      
+    </section>
+  
+  </footer>
+<!-- END FOOTER --> 
+
 </div>
+
 </body>
+
 </html>
